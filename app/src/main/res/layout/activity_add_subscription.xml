@@ -14,7 +14,7 @@
             android:layout_width="270dp"
             android:layout_height="wrap_content"
             android:id="@+id/addName"
-            android:hint="Subscription name"/>
+            android:hint="Subscription name, max 20 char"/>
         <EditText
             android:layout_width="270dp"
             android:layout_height="wrap_content"
@@ -30,11 +30,27 @@
             android:layout_height="wrap_content"
             android:id="@+id/addComment"
             android:hint="Optional comment, max 30 char"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnSubmit"
-            android:text="Submit"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Submit" />
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delete" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
