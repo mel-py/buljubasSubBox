@@ -60,8 +60,8 @@ public class AddSubscriptionActivity extends AppCompatActivity {
             subDate.setText(oldDate);
             subCharge.setText(oldCharge);
             subComment.setText(oldComment);
-        //Set up for making a new subscription
-        //Leave the EditText fields blank and hide the delete button
+            //Set up for making a new subscription
+            //Leave the EditText fields blank and hide the delete button
         } else {
             deleteBtn.setVisibility(View.GONE);
         }

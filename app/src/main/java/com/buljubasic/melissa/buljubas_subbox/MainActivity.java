@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         subsList = (ListView) findViewById(R.id.subList);
         addSubscription = (Button) findViewById(R.id.button);
 
+        loadList();
+
         customListView = new CustomListViewAdapter(this, subscriptionList);
         subsList.setAdapter(customListView);
 
@@ -61,18 +63,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, AddSubscriptionActivity.class);
                 intent.putExtra("name", subscriptionList.get(position).getName());
                 intent.putExtra("date", subscriptionList.get(position).getDate());
-                intent.putExtra("charge", Double.toString(subscriptionList.get(position).getCharge()));
+                intent.putExtra("charge", subscriptionList.get(position).getCharge());
                 intent.putExtra("comment", subscriptionList.get(position).getComment());
                 intent.putExtra("command", "edit");
                 startActivityForResult(intent, 1);
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        loadList();
     }
 
     //get the result of the AddSubscriptionActivity
@@ -86,14 +82,12 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == 0) {
             try {
                 Subscription newSub = new Subscription(data.getStringExtra("name"), data.getStringExtra("date"),
-                        Double.parseDouble(data.getStringExtra("charge")), data.getStringExtra("comment"));
+                        data.getStringExtra("charge"), data.getStringExtra("comment"));
                 subscriptionList.add(newSub);
             } catch (CommentTooLongException e) {
                 Toast.makeText(this, "Comment cannot be longer then 30 characters", Toast.LENGTH_LONG).show();
             } catch (NameTooLongException e) {
                 Toast.makeText(this, "Name cannot be longer then 20 characters", Toast.LENGTH_LONG).show();
-            } catch (NegativeChargeException e) {
-                Toast.makeText(this, "Charge cannot be negative", Toast.LENGTH_LONG).show();
             }
         }
         //All items are changed when the subscription is edited
@@ -102,14 +96,12 @@ public class MainActivity extends AppCompatActivity {
             try {
                 subscriptionList.get(subIndex).setName(data.getStringExtra("name"));
                 subscriptionList.get(subIndex).setDate(data.getStringExtra("date"));
-                subscriptionList.get(subIndex).setCharge(Double.parseDouble(data.getStringExtra("charge")));
+                subscriptionList.get(subIndex).setCharge(data.getStringExtra("charge"));
                 subscriptionList.get(subIndex).setComment(data.getStringExtra("comment"));
             } catch (CommentTooLongException e) {
                 Toast.makeText(this, "Comment cannot be longer then 30 characters", Toast.LENGTH_LONG).show();
             } catch (NameTooLongException e) {
                 Toast.makeText(this, "Name cannot be longer then 20 characters", Toast.LENGTH_LONG).show();
-            } catch (NegativeChargeException e) {
-                Toast.makeText(this, "Charge cannot be negative", Toast.LENGTH_LONG).show();
             }
         }
         else if (resultCode == 2) {
@@ -124,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
             FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
             for (int i = 0; i < subscriptionList.size(); i++) {
                 Subscription newSub = subscriptionList.get(i);
-                fos.write(new String(newSub.getName() + "|" + newSub.getCharge() + "|"
-                        + newSub.getDate() + "|" + newSub.getComment() + "\n").getBytes());
+                fos.write((newSub.getName() + "|" + newSub.getDate() + "|"
+                        + newSub.getCharge() + "|" + newSub.getComment() + "\n").getBytes());
             }
             fos.close();
         } catch (FileNotFoundException e) {
@@ -145,14 +137,15 @@ public class MainActivity extends AppCompatActivity {
             while (line != null) {
                 String[] parts = line.split("\\|");
                 try {
-                    subscriptionList.add(new Subscription(parts[0], parts[1],
-                            Double.parseDouble(parts[2]), parts[3]));
+                    if (parts.length == 3) {
+                        subscriptionList.add(new Subscription(parts[0], parts[1], parts[2]));
+                    } else {
+                        subscriptionList.add(new Subscription(parts[0], parts[1], parts[2], parts[3]));
+                    }
                 } catch (CommentTooLongException e) {
                     Log.i("---->", "Comment too long");
                 } catch (NameTooLongException e) {
                     Log.i("---->", "Name too long");
-                } catch (NegativeChargeException e) {
-                    Log.i("---->", "Negative charge");
                 }
                 line = in.readLine();
             }

@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Melissa\Downloads\buljubasSubBox-master\buljubasSubBox\app\app.iml" filepath="C:\Users\Melissa\Downloads\buljubasSubBox-master\buljubasSubBox\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/buljubasSubBox.iml" filepath="$PROJECT_DIR$/buljubasSubBox.iml" />
+      <module fileurl="file://C:\Users\Melissa\Downloads\buljubasSubBox-master\buljubasSubBox\buljubasSubBox.iml" filepath="C:\Users\Melissa\Downloads\buljubasSubBox-master\buljubasSubBox\buljubasSubBox.iml" />
     </modules>
   </component>
 </project>

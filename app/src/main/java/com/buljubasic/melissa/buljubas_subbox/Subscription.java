@@ -18,25 +18,23 @@ import java.util.Date;
 public class Subscription {
     private String name;
     private String date;
-    private double charge;
+    private String charge;
     private String comment;
 
-    Subscription(String name, String date, double charge) {
+    Subscription(String name, String date, String charge) {
         this.name = name;
         this.date = date;
         this.charge = charge;
         this.comment = "";
     }
 
-    Subscription(String name, String date, double charge, String comment) throws
-            CommentTooLongException, NameTooLongException, NegativeChargeException {
+    Subscription(String name, String date, String charge, String comment) throws
+            CommentTooLongException, NameTooLongException {
         if (name.length() < 20) {
             this.name = name;
         }
         this.date = date;
-        if (charge >= 0) {
-            this.charge = charge;
-        }
+        this.charge = charge;
         if (comment.length() < 30) {
             this.comment = comment;
         }
@@ -60,15 +58,11 @@ public class Subscription {
         this.date = newDate;
     }
 
-    public double getCharge() {
+    public String getCharge() {
         return this.charge;
     }
 
-    public void setCharge(double newCharge) throws NegativeChargeException {
-        if (newCharge >= 0) {
-            this.charge = newCharge;
-        }
-    }
+    public void setCharge(String newCharge) { this.charge = newCharge; }
 
     public String getComment() {
         return this.comment;
