@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by Melissa on 2018-01-25.
- */
-
+//Sets up the list view to display the subscriptions
+//This code is from a music player app I made before
+//I think I got the code from here: 
+//https://www.caveofprogramming.com/guest-posts/custom-listview-with-imageview-and-textview-in-android.html
 public class CustomListViewAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Subscription> subs;
